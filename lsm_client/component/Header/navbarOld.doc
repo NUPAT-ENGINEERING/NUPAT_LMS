@@ -1,0 +1,99 @@
+import React, { useState } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+//import components
+import DrawerComp from './DrawerComp'
+// import TopNav from './TopNav'
+// import Mui components
+import {
+  AppBar,
+  Tab,
+  Tabs,
+  Toolbar,
+  Typography,
+  Button,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
+import { Container } from '@mui/system'
+import PersonAddIcon from '@mui/icons-material/PersonAdd'
+// images
+import logo from '../../public/logo.png'
+
+const Navbar = () => {
+  // const NavDetails = [
+  //   {
+  //     id: 1,
+  //     title: 'College',
+  //     link: '/',
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Faq',
+  //     link: '/Faq',
+  //   },
+  // ]
+
+  const theme = useTheme()
+  const isMatch = useMediaQuery(theme.breakpoints.down('md'))
+  const [value, setValue] = useState()
+  return (
+    <>
+      {/* <TopNav/> */}
+      <AppBar sx={{ background: 'white', color: '#3b3d94' }}>
+        <Container>
+          <Toolbar>
+            <div>
+              <Link href="/">
+                <a>
+                  <Image
+                    src={logo}
+                    width="50"
+                    height="50"
+                    className="searchImg"
+                  />
+                </a>
+              </Link>
+            </div>
+            {isMatch ? (
+              <>
+                <DrawerComp />
+              </>
+            ) : (
+              <>
+                <Tabs
+                  sx={{ marginLeft: 'auto', marginRight: '30px' }}
+                  value={value}
+                  onChange={(e, value) => setValue(value)}
+                  indicatorColor="primary"
+                >
+                  
+                  <Tab
+                    label="College"
+                    sx={{ fontSize: '12px', color: 'inherit' }}
+                  />
+                  <Tab
+                    label="Faq"
+                    sx={{ fontSize: '12px', color: 'inherit' }}
+                  />
+                </Tabs>
+                <Link href="/register">
+                  <a target="blank">
+                    <Button variant="contained" sx={{ fontSize: '12px' }}>
+                      Sign Up
+                      <PersonAddIcon
+                        sx={{ marginLeft: '10px', fontSize: '15px' }}
+                      />
+                    </Button>
+                  </a>
+                </Link>
+              </>
+            )}
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </>
+  )
+}
+
+export default Navbar
